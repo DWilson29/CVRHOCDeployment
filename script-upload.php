@@ -8,9 +8,10 @@ if(isset($_POST['submit'])) {
 	if($fileError === 0) {
 		// do the upload
 		$fileDest = 'uploads/'.$fileName;
-		header("Location: upload.php?uplaodsuccess");
+		move_uploaded_file($fileName, $fileDest)
+		header("Location: index.php?uploadsuccess");
 	}
 	else {
-		echo "Therre was an error uploading your file!";
+		echo "There was an error uploading your file!";
 	}
 }
