@@ -14,12 +14,14 @@ body {
     margin: 0;
 }
 #unity-container {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
 }
 #unity-canvas {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
     background: #231F20;
 }
 #loading-cover {
