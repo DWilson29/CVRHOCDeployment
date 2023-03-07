@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ClassroomVRforCivilOperations</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -25,11 +25,11 @@
     <script>
       const hideFullScreenButton = "";
       const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/scene2.loader.js";
+      const loaderUrl = buildUrl + "/scene1.loader.js";
       const config = {
-        dataUrl: buildUrl + "/scene2.data.br",
-        frameworkUrl: buildUrl + "/scene2.framework.js.br",
-        codeUrl: buildUrl + "/scene2.wasm.br",
+        dataUrl: buildUrl + "/scene1.data",
+        frameworkUrl: buildUrl + "/scene1.framework.js",
+        codeUrl: buildUrl + "/scene1.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "ClassroomVRforCivilOperations",
@@ -64,6 +64,10 @@
         config.devicePixelRatio = 1;
       }
       loadingCover.style.display = "";
+
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.position = "fixed";
 
       const script = document.createElement("script");
       script.src = loaderUrl;
