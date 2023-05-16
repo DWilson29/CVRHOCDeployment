@@ -1,0 +1,11 @@
+.index {
+    display: flex;
+}
+
+.top-area {
+    display: flex;
+}
+
+#index-text {
+    align-self: center;
+}

@@ -1,9 +1,30 @@
 <?php session_start(); /* Starts the session */
-        
+        error_reporting(E_ALL);
         /* Check Login form submitted */        
         if(isset($_POST['Submit'])){
                 /* Define username and associated password array */
-                $logins = array('proflouis' => 'cvrhco','admin' => 'password');
+                $logins = array();
+
+                $f = fopen("login-creds.csv", "r");
+                $i = 0;
+                while (($line = fgetcsv($f)) !== false) {
+                    //echo "<tr>";
+                    $j = 0;
+                    $prevcell;
+                    foreach ($line as $cell) {
+                        if($j == 0) {
+                          $logins[$cell];
+                        }
+                        if($j == 1) {
+                          $logins[$prevcell] = $cell; 
+                        }
+                        $j++;
+                        $prevcell = $cell;
+                    }
+                    //echo "</tr>\n";
+                    $i++;
+                }
+                fclose($f);
                 
                 /* Check and assign submitted Username and Password to new variable */
                 $Username = isset($_POST['Username']) ? $_POST['Username'] : '';
