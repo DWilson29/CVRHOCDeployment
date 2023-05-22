@@ -6,6 +6,7 @@
 	<body>
 		<?php
 			if(isset($_POST['submit'])) {
+				// Get relevant details for handling the file upload
 				error_reporting(E_ALL);
 				$file  = $_FILES['file'];
 				$fileName = $_FILES['file']['name'];
@@ -18,7 +19,7 @@
 				} else {
 					if($fileError === 0) {
 						$fileDest = __DIR__ .'/'.$fileName;
-						// move the zip
+						// move the zip from the user to the correct location
 						if(move_uploaded_file($fileTmpName, $fileDest) === FALSE) {
 							echo "Upload Error in move_uploaded_file";
 							echo "<br>";
@@ -33,7 +34,6 @@
 							echo "Incorrect file structure. Please make sure the zipped file has a file structure corresponding to: <b>$fileName -> $sceneName/index.html</b> <br>";
 							$zipDelete=unlink($fileDest);
 							if($zipDelete) {
-								//echo "Zip Cleanup Successful <br>";
 							}
 							else {
 								echo "Zip Cleanup Failed <br>";
@@ -42,27 +42,27 @@
 							exit();
 						}
 						$zipCheck->close();
-						// Perform upload function
+						// If upload file checking succeeds, perform upload function
+
+						// Get the current user full URL
 						$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 						$url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-						//echo "URL identified as: $url <br>";
+						// Replace current script-upload.php part of URL with the link to the scene
 						$link = str_replace("script-upload.php", "", $url);
 						$sceneLink = str_replace(".zip", "", $fileName);
 						$link = $link.$sceneLink;
 						echo "Scene now available at <a href=$link>$link</a>";
 						echo "<br>";
 						
+						// Finish upload and clean up residual zip file
 						$zip = new ZipArchive;
 						$res = $zip->open($fileDest);
 						if($res === TRUE) {
 							$zip->extractTo('./');
 							$zip->close();
-							//echo "Zip Extract Successful";
-							//echo "<br>";
 							$zipDelete=unlink($fileDest);
 							if($zipDelete) {
-								//echo "Zip Cleanup Successful";
-								//echo "<br>";
+								//echo "Zip Cleanup Successful <br>";
 							}
 							else {
 								echo "Zip Cleanup Failed";
@@ -75,8 +75,8 @@
 						}
 					}
 					else {
-					echo "There was an error uploading your file!";
-					echo "<br>";
+						echo "There was an error uploading your file!";
+						echo "<br>";
 					}
 				}
 			}

@@ -1,5 +1,5 @@
 <?php
-	//function(s)
+	// Recursive remove function
 	function rrmdir($dir) {
 		if(is_dir($dir)) {
 			$objects = scandir($dir);

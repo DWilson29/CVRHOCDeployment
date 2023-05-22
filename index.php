@@ -1,8 +1,10 @@
-<?php session_start(); /* Starts the session */
-		if(!isset($_SESSION['UserData']['Username'])){
-				header("location:login.php");
-				exit;
-		}
+<?php 
+	// Start the session
+	session_start();
+	if(!isset($_SESSION['UserData']['Username'])){
+			header("location:login.php");
+			exit;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -26,20 +28,28 @@
 		</div>
 		
 		<?php
-			
+			// Check and grab all sub-folders (which should be scenes) that contain index.html
 			if(glob("./*/index.html")) {
+				// Save detected folders as an array
 				$library = glob("./*/index.html");
 				for($i = 0; $i < count($library); $i++) {
+					// Clean up the collected directories so just the scene folder name may be fixed to the end of the URL as a link
 					$library[$i] = str_replace("./", "", $library[$i]);
 					$library[$i] = str_replace("/index.html", "", $library[$i]);
 					
+					// Grab the current user URL
 					$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 					$url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-					//echo "URL identified as: $url <br>";
+
+					// Clean the current user URL of its current location
 					$link = str_replace("index.php", "", $url);
 					$libraryLink = $library[$i];
+
+					// Fix the scene folder name from the library array as a new link for the user
 					$link = $link.$libraryLink;
 					$idx = $i+1;
+
+					// Generate remove scene script link for the scene
 					$removeLink = str_replace("$library[$i]", "remove.php?scene=$library[$i]", $link);
 
 					?>
@@ -52,8 +62,8 @@
 					</div>
 
 					<?php
-					/*
-					//old PHP way of displaying info
+					/* old PHP way of displaying info
+
 					echo "<div class=\"index\">";
 
 					echo '<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.$link.'&choe=UTF-8" title="Link to scene" />';
